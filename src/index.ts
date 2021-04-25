@@ -13,6 +13,7 @@ export function useSound(
   {
     volume = 1,
     playbackRate = 1,
+    mute = false,
     soundEnabled = true,
     interrupt = false,
     onload,
@@ -32,6 +33,7 @@ export function useSound(
         src: [url],
         volume: unref(volume),
         rate: unref(playbackRate),
+        mute: unref(mute),
         onload: handleLoad,
         ...delegated,
       })
@@ -55,6 +57,7 @@ export function useSound(
           src: [url],
           volume: unref(volume),
           rate: unref(playbackRate),
+          mute: unref(mute),
           onload: handleLoad,
           ...delegated,
         })
@@ -63,9 +66,10 @@ export function useSound(
   )
 
   watch(
-    () => [unref(volume), unref(playbackRate)],
+    () => [unref(volume), unref(playbackRate), unref(mute)],
     () => {
       if (sound.value) {
+        sound.value.mute(unref(mute))
         sound.value.volume(unref(volume))
         sound.value.rate(unref(playbackRate))
       }
