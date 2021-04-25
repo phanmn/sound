@@ -46,7 +46,7 @@ export function useSound(
       onload.call(this)
     }
 
-    duration.value = sound.value?.duration() || 0
+    duration.value = (sound.value?.duration() || 0) * 1000
   }
 
   watch(
